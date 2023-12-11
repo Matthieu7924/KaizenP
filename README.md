@@ -25,4 +25,10 @@ pour ne pas tout synchroniser avec git on crée un fichier .env.local
 
 symgony console doctrine:database:create
 
+symfony console make:user
+avec email en unique display
+
+symfony console make:entity Client
+
+
 
