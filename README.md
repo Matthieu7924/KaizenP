@@ -28,7 +28,19 @@ symgony console doctrine:database:create
 symfony console make:user
 avec email en unique display
 
-symfony console make:entity Client
+symfony console make:entity User
+symfony console make:entity Commande
+symfony console make:entity CDetailsCommande
+symfony console make:entity Produit
+symfony console make:entity Image
+
+symfony console migrations:migrate
+symfony console migrations:migrate
+
+
+création du dossier public/assets
+dans lequel on crée 2 dossiers  (css et js)
+dans lesquels on importe les dossiers minifiés de bootstrap
 
 
 
