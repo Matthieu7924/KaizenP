@@ -43,4 +43,14 @@ dans lequel on crée 2 dossiers  (css et js)
 dans lesquels on importe les dossiers minifiés de bootstrap
 
 
+Authentification
+symfony console make:auth
+on choisit  1 Login form authenticator (pour avoir direct le forumaire)
+on le nomme userAuthenticator
+ça génère le securityController
 
+symfony console make:registration-form
+on choisit yes pour que le user crée soit unique
+on choisit no pour la vérification d'email car on implémente nous même la vérifi d'emails sans passser par symfony
+yes pour l'authentification automatique
+donc ceci a crée le regsitrationController
