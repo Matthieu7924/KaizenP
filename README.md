@@ -54,3 +54,6 @@ on choisit yes pour que le user crée soit unique
 on choisit no pour la vérification d'email car on implémente nous même la vérifi d'emails sans passser par symfony
 yes pour l'authentification automatique
 donc ceci a crée le regsitrationController
+
+création d'un trait CreataedAtTrait pour éviter la redondance de code
+du coup on importe le use CreatedAtTrait en haut des classes User Categorie Commande et Produit
