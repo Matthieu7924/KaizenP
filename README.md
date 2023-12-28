@@ -77,4 +77,13 @@ avec les produits
     -symfony console make:fixtures ProduitsFixtures
 et les images
     -symfony console make:fixtures ImagesFixtures
-    -
+
+
+CONTOLEURS
+symfony console make:controller ProfileController
+    -cette commande executée crée le controleuret un template twig
+
+
+    SANS PASSER PAR LES FIXTURES
+    CREATION DE L'ADMIN
+    php bin/console security:hash-password

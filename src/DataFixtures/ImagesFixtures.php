@@ -18,13 +18,13 @@ class ImagesFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for($i=1;$i<=100;$i++)
-        {
-            $img=new Image();
+        for ($i = 1; $i <= 100; $i++) {
+            $img = new Image();
             $randomName = $faker->word . '_' . $faker->randomNumber() . '.' . $faker->randomElement(['jpg', 'jpeg', 'png']);
             $img->setNom($randomName);
-
-            $produit = $this->getReference('prod-' . rand(1, 10));
+        
+            // Utilisez la plage correcte pour les références de produits
+            $produit = $this->getReference('prod-' . rand(1, 19));
             $img->setProduit($produit);
             $manager->persist($img);
         }
