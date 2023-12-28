@@ -55,5 +55,26 @@ on choisit no pour la vérification d'email car on implémente nous même la vé
 yes pour l'authentification automatique
 donc ceci a crée le regsitrationController
 
+TAIT
 création d'un trait CreataedAtTrait pour éviter la redondance de code
 du coup on importe le use CreatedAtTrait en haut des classes User Categorie Commande et Produit
+
+SLUG
+ajout d'une propriété slug
+le slug sert à avoir une url avec le nom d'un produit plutot qu'un id
+
+DATA FIXTURES
+création de datafixtures pour alimenter la bdd
+    -composer require --dev orm-fixtures
+    -composer require fakerphp/faker
+on commence par créer des catégories sans le faker
+    -symfony console make:fixtures
+    -je code mon fichier de fixtures
+    -symfony console doctrine:fixtures:load
+on poursuit avec les users
+    -symfony console make:fixtures UsersFixtures
+avec les produits
+    -symfony console make:fixtures ProduitsFixtures
+et les images
+    -symfony console make:fixtures ImagesFixtures
+    -
