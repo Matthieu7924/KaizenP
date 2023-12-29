@@ -93,3 +93,22 @@ Dans le MainController pour avoir les différentes catégories dans le index on 
 chaque card bootstrap represente une categorie qui permet de renvoyer vers la liste des produits rattachés à cette catégorie 
 donc on crée un nouveau controller 
 CategorieController
+
+dans partials on crée un fichier flash.html.twig
+pour tous les messages d'alerte
+
+pour la vérif des mails
+il faut checker dans le fichier .env.local
+pour envoyer un mail il faut d'abord activer le 
+MAILER_DSN=smtp://localhost:1025
+ensuite créer un dossier Service dans Src
+dans lequel on crée un fichier SendMailService
+on configure le mail 
+ensuite dans le controleur RegistrationController on injecte le SenMailService
+on crée un dossier Emails dans Templates
+dans ce dossier on crée le fichier
+
+pour tester on lance mailhog
+par défaut symfony utilise messenger et pas mailhog
+du coup il faut commenter le sendmailMessage dans le routing de Config/Packages/Messenger.yaml
+pour rendre le lien du mail de vérification actif il faut un un json web token

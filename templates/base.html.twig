@@ -16,7 +16,14 @@
 	<body>
 		
 		{% include "_partials/_nav.html.twig" %}
-		
+		{% if app.user and app.user.isVerified == false %}
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<div class="alert-message">
+					<strong>Ce compte n'est pas vérifié</strong>, <a href="#">renvoyer le lien d'activation</a>
+				</div>
+			</div>
+		{% endif %}
 		{% block body %}{% endblock %}
 		
 		{% include "_partials/_footer.html.twig" %}
