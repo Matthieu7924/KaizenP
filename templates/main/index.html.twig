@@ -3,6 +3,31 @@
 {% block title %}Banzaiii{% endblock %}
 
 {% block body %}
-<h1>E SHOP</h1>
-<p>Bienvenue sur le Kaizen Project Shop</p>
+<main class="container">
+    <section class="row">
+        <div class="col-12">
+            <h1>E SHOP</h1>
+            <p>Bienvenue sur le Kaizen Project Shop</p>
+        </div>
+        <div class="col-12">
+            {# {{ dump()}} #}
+            {% for categorie in categories %}
+                {# {% if categorie.parent == null %}
+                    <div class="col-12">
+                        <h2>{{ categorie.nom }}</h2>
+                    </div>
+                {% else %} #}
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ categorie.nom }}</h3>
+                                <a href="{{ path('categorie_listeProd', {slug: categorie.slug}) }}" class="btn btn-primary">Voir les produits</a>
+                            </div>
+                        </div>
+                    </div>    
+                {# {% endif %} #}
+            {% endfor %}
+        </div>
+    </section>
+</main>
 {% endblock %}

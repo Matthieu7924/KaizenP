@@ -87,3 +87,9 @@ symfony console make:controller ProfileController
     SANS PASSER PAR LES FIXTURES
     CREATION DE L'ADMIN
     php bin/console security:hash-password
+
+
+Dans le MainController pour avoir les différentes catégories dans le index on injecte le categorie repository pour interroger la bdd et transmettre à la vue la liste des categories par ordre
+chaque card bootstrap represente une categorie qui permet de renvoyer vers la liste des produits rattachés à cette catégorie 
+donc on crée un nouveau controller 
+CategorieController
