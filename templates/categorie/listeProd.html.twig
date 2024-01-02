@@ -15,30 +15,30 @@
 					</h1>
 				</div>
 
-				{% if produits is not empty %}
-					<ul>
-						{% for produit in produits %}
-							<div class="col-3">
-								<article class="card h-100">
-									<div class="card-body">
-										<h2 class="card-title">
-											{{ produit.nom }}
-										</h2>
-										<p class="card-text">
-											{{ produit.description }}
-										</p>
-										<p class="card-text">
-											{{ produit.prix }}
-										</p>
-										<a href="#" class="btn btn-primary">Détails</a>
-									</div>
-								</article>
-							</div>
-						{% endfor %}
-					</ul>
-				{% else %}
-					<p>Aucun produit trouvé dans cette catégorie.</p>
-				{% endif %}
+			{% if produits is not empty %}
+				<div class="row">
+					{% for produit in produits %}
+						<div class="col-md-3 mb-3">
+							<article class="card h-100">
+								<div class="bg-info card-body">
+									<h2 class="card-title">
+										{{ produit.nom }}
+									</h2>
+									<p class="card-text">
+										{{ produit.description }}
+									</p>
+									<p class="card-text">
+										{{ produit.prix }}
+									</p>
+									<a href="#" class="btn btn-primary">Détails</a>
+								</div>
+							</article>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>Aucun produit enregistré cette catégorie.</p>
+			{% endif %}
 			{% else %}
 				<p>Catégorie non trouvée</p>
 			{% endif %}
