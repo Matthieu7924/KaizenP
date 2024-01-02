@@ -113,3 +113,9 @@ par défaut symfony utilise messenger et pas mailhog
 du coup il faut commenter le sendmailMessage dans le routing de Config/Packages/Messenger.yaml
 pour rendre le lien du mail de vérification actif il faut un un json web token
 dans le dossier Service on crée le fichier
+
+JwtToken à faire /9
+
+14 PAGINATION
+composer require knplabs/knp-paginator-bundle
+
