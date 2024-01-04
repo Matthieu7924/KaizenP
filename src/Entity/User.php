@@ -59,6 +59,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\Column(length:255)]
+    private ?string $emailVerificationToken = null;
+
+
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -253,6 +258,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of emailVerificationToken
+     */ 
+    public function getEmailVerificationToken()
+    {
+        return $this->emailVerificationToken;
+    }
+
+    /**
+     * Set the value of emailVerificationToken
+     *
+     * @return  self
+     */ 
+    public function setEmailVerificationToken($emailVerificationToken)
+    {
+        $this->emailVerificationToken = $emailVerificationToken;
 
         return $this;
     }

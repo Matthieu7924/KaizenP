@@ -109,6 +109,7 @@ on crée un dossier Emails dans Templates
 dans ce dossier on crée le fichier
 
 pour tester on lance mailhog
+on se connecte en local http://localhost:8025/#
 par défaut symfony utilise messenger et pas mailhog
 du coup il faut commenter le sendmailMessage dans le routing de Config/Packages/Messenger.yaml
 pour rendre le lien du mail de vérification actif il faut un un json web token

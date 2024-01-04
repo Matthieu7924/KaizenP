@@ -1,3 +1,5 @@
+{# templates/emails/register.html.twig #}
+
 <h1>Activer le compte</h1>
 <p>Bonjour {{ user.prenom }}</p>
-<p>pour activer votre compte vous devez cliquer sur ce <a>lien</a></p>
+<p>Pour activer votre compte, vous devez cliquer sur ce <a href="{{ path('app_verify_email', {'token': user.emailVerificationToken}) }}">lien</a></p>
