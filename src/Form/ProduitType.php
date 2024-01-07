@@ -21,6 +21,8 @@ class ProduitType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
+                'label'=>'Categorie',
+                'group_by'=>'parent.name'
             ])
             ->add('slug'); // Ajoutez le champ slug ici
     }

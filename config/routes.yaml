@@ -1,3 +1,13 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+produit_delete:
+    path: '/produits/{slug}/delete'
+    controller: 'App\Controller\ProduitController::delete'
+    methods: ['POST']
+
+categorie_listeProd:
+    path: '/categories/{slug}/products'
+    controller: 'App\Controller\YourController::listeProduits'
+    methods: ['GET']

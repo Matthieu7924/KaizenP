@@ -62,6 +62,9 @@ du coup on importe le use CreatedAtTrait en haut des classes User Categorie Comm
 SLUG
 ajout d'une propriété slug
 le slug sert à avoir une url avec le nom d'un produit plutot qu'un id
+Les slugs sont généralement des chaînes conviviales pour les utilisateurs, souvent utilisées dans les URL.
+Peut rendre les URL plus lisibles et améliorer le référencement.
+Utile lorsque l'identifiant doit être présenté de manière conviviale dans l'URL.
 
 DATA FIXTURES
 création de datafixtures pour alimenter la bdd
@@ -119,4 +122,12 @@ JwtToken à faire /9
 
 14 PAGINATION
 composer require knplabs/knp-paginator-bundle
+
+
+16CREATION du Formualire d'ajout de produit
+
+
+15 MISE EN PLACE PERMISSION USERS
+dans le dossier config/packages/security.yaml
+*en dessous d'acces_control on ajoute role_hierarchy:
 

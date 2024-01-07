@@ -13,6 +13,7 @@
 					<h1>Liste des produits de la catégorie
 						{{ categorie.nom }}
 					</h1>
+					<a href="{{ path('produit_add') }}" class="btn btn-success">Ajouter un Produit</a>
 				</div>
 
 			{% if produits is not empty %}
@@ -30,7 +31,7 @@
 									<p class="card-text">
 										{{ produit.prix }}
 									</p>
-									<a href="#" class="btn btn-primary">Détails</a>
+								<a href="{{ path('produit_details', {'slug': produit.slug}) }}" class="btn btn-primary">Détails</a>
 								</div>
 							</article>
 						</div>
