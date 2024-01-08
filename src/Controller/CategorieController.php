@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository;
+
 
 #[Route('/categories', name: 'categorie_')]
 class CategorieController extends AbstractController
@@ -106,4 +109,27 @@ class CategorieController extends AbstractController
 
         return $this->redirectToRoute('categorie_index');
     }
+
+
+    #[Route("/categories/{slug}/products", name: "categorie_listeProd")]
+    public function listeProduits($slug, CategorieRepository $categorieRepository, ProduitRepository $produitRepository): Response
+    {
+        // Récupérer la catégorie
+        $categorie = $categorieRepository->findOneBy(['slug' => $slug]);
+
+        // Vérifier si la catégorie existe
+        if (!$categorie) {
+            throw $this->createNotFoundException('La catégorie n\'existe pas');
+        }
+
+        // Récupérer les produits de la catégorie
+        $produits = $produitRepository->findBy(['categorie' => $categorie]);
+
+        // Rendre la vue en passant la catégorie et les produits
+        return $this->render('categorie/listeProd.html.twig', [
+            'categorie' => $categorie,
+            'produits' => $produits,
+        ]);
+    }
+
 }

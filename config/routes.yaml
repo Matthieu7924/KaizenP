@@ -9,5 +9,5 @@ produit_delete:
 
 categorie_listeProd:
     path: '/categories/{slug}/products'
-    controller: 'App\Controller\YourController::listeProduits'
+    controller: 'App\Controller\CategorieController::listeProduits'
     methods: ['GET']
