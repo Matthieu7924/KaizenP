@@ -31,6 +31,10 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: DetailsCommande::class, orphanRemoval: true)]
     private Collection $detailsCommandes;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Magasin $magasin = null;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -103,6 +107,18 @@ class Commande
                 $detailsCommande->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMagasin(): ?Magasin
+    {
+        return $this->magasin;
+    }
+
+    public function setMagasin(?Magasin $magasin): static
+    {
+        $this->magasin = $magasin;
 
         return $this;
     }

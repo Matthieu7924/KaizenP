@@ -46,11 +46,15 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: DetailsCommande::class)]
     private Collection $detailsCommandes;
 
+    #[ORM\ManyToMany(targetEntity: Promotion::class, mappedBy: 'Produit')]
+    private Collection $promotions;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->detailsCommandes = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->promotions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,6 +189,33 @@ class Produit
             if ($detailsCommande->getProduit() === $this) {
                 $detailsCommande->setProduit(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotion>
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotion $promotion): static
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+            $promotion->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion): static
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            $promotion->removeProduit($this);
         }
 
         return $this;
