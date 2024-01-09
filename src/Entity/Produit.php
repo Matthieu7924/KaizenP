@@ -2,15 +2,21 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\CreatedAtTrait;
-use App\Entity\Trait\SlugTrait;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\Trait\SlugTrait;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Trait\CreatedAtTrait;
 use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[Vich\Uploadable]
+#[UniqueEntity(fields: 'nom', message: 'Ce produit existe déjà.')]
 class Produit
 {
     use CreatedAtTrait;
@@ -33,6 +39,14 @@ class Produit
     #[ORM\Column]
     private ?int $stock = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'imagePath')]
+    private ?string $imagePath = null;
+
+    #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'imageFile')]
+    #[Assert\Image(mimeTypes: ['image/jpeg', 'image/png'], maxSize: '5M', maxSizeMessage: 'L\'image ne doit pas dépasser 5 Mo.')]
+    private ?File $imageFile = null;
+
     // #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     // private ?\DateTimeImmutable $createdAt = null;
 
@@ -48,6 +62,9 @@ class Produit
 
     #[ORM\ManyToMany(targetEntity: Promotion::class, mappedBy: 'Produit')]
     private Collection $promotions;
+
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
@@ -216,6 +233,34 @@ class Produit
     {
         if ($this->promotions->removeElement($promotion)) {
             $promotion->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): self
+    {
+        $this->imagePath = $imagePath;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
