@@ -9,6 +9,7 @@ use App\Entity\Trait\CreatedAtTrait;
 use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -43,15 +44,18 @@ class Produit
     #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'imagePath')]
     private ?string $imagePath = null;
 
+    #[ORM\Column(nullable: true)]
     #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'imageFile')]
     #[Assert\Image(mimeTypes: ['image/jpeg', 'image/png'], maxSize: '5M', maxSizeMessage: 'L\'image ne doit pas dépasser 5 Mo.')]
     private ?File $imageFile = null;
+    
 
     // #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     // private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Vich\UploadableField(mapping: 'product_images', fileNameProperty: 'imageFile')]
     private ?Categorie $categorie = null;
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class, orphanRemoval: true)]
@@ -250,19 +254,22 @@ class Produit
         return $this;
     }
 
+
+
+
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
     public function setImageFile(?File $imageFile = null): self
-    {
-        $this->imageFile = $imageFile;
+{
+    $this->imageFile = $imageFile;
 
-        if ($imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-
-        return $this;
+    if ($imageFile instanceof UploadedFile) {
+        $this->updatedAt = new \DateTimeImmutable();
     }
+
+    return $this;
+}
 }

@@ -3,22 +3,30 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Form\ProduitType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+
 
 #[Route('/produits', name: 'produit_')]
 class ProduitController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
-    private EntityManagerInterface $doctrine;
+    private UploaderHelper $uploaderHelper;
+    
 
-    public function __construct(EntityManagerInterface $entityManager, EntityManagerInterface $doctrine)
+
+    public function __construct(EntityManagerInterface $entityManager, UploaderHelper $uploaderHelper)
     {
         $this->entityManager = $entityManager;
-        $this->doctrine = $doctrine;
+        $this->uploaderHelper = $uploaderHelper;
+
     }
 
     #[Route('/', name: 'index')]
@@ -30,23 +38,28 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/nouveau', name: 'add')]
+    #[Route('/nouveau', name: 'add')]
     public function add(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $produit = new Produit();
-        $form = $this->createForm(\App\Form\ProduitType::class, $produit);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $produit = $form->getData();
+            // Persistez l'entité, VichUploader s'occupera du téléchargement automatique du fichier
             $this->entityManager->persist($produit);
             $this->entityManager->flush();
+
             $this->addFlash(
                 'success',
                 'Produit correctement ajouté!'
             );
+
             return $this->redirectToRoute('produit_index');
         }
+
         return $this->render('produit/add.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -58,9 +71,11 @@ class ProduitController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $produit = $this->entityManager->getRepository(Produit::class)->findOneBy(['slug' => $slug]);
+
         if (!$produit) {
             throw $this->createNotFoundException('Produit non trouvé');
         }
+
         return $this->render('produit/details.html.twig', [
             'produit' => $produit,
         ]);
@@ -72,17 +87,19 @@ class ProduitController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $produit = $this->entityManager->getRepository(Produit::class)->findOneBy(['slug' => $slug]);
+
         if (!$produit) {
             throw $this->createNotFoundException('Produit non trouvé');
         }
+
         $this->entityManager->remove($produit);
         $this->entityManager->flush();
+
         $this->addFlash(
             'success',
             'Produit correctement supprimé!'
         );
-        return $this->render('produit/index.html.twig', [
-            'controller_name' => 'ProduitController',
-        ]);
+
+        return $this->redirectToRoute('produit_index');
     }
 }

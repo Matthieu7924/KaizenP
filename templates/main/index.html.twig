@@ -21,7 +21,7 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h3 class="card-title">{{ categorie.nom }}</h3>
-                                 {# Vérifiez si la catégorie a un slug avant de créer le lien #}
+                                {# Vérifiez si la catégorie a un slug avant de créer le lien #}
                                 {% if categorie.slug is defined and categorie.slug is not empty %}
                                     <a href="{{ path('categorie_listeProd', {slug: categorie.slug}) }}" class="btn btn-primary">Voir les produits</a>
                                 {% else %}

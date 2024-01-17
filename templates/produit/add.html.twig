@@ -1,3 +1,4 @@
+{# Votre template Twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Ajouter un Produit{% endblock %}
@@ -6,13 +7,13 @@
     <div class="container">
         <h1>Ajouter un Produit</h1>
 
-        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+        {{ form_start(form, {'enctype': 'multipart/form-data', 'attr': {'class': 'form'}}) }}
 
         <div class="mb-3">
             {{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3">a
             {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
         </div>
 
@@ -26,6 +27,11 @@
 
         <div class="mb-3">
             {{ form_row(form.categorie, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {# Utilisez form_widget pour afficher le champ de fichier correctement #}
+            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <div class="mb-3">

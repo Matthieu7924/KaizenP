@@ -1,4 +1,4 @@
-# see https://symfony.com/doc/current/reference/configuration/framework.html
+# config/packages/framework.yaml
 framework:
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
@@ -17,8 +17,14 @@ framework:
     php_errors:
         log: true
 
-when@test:
-    framework:
-        test: true
-        session:
-            storage_factory_id: session.storage.factory.mock_file
+    assets:
+        packages:
+            images:
+                version: '1.0'
+                base_path: '/uploads/images'
+
+# Déplacez la section parameters en dehors de framework
+parameters:
+    images_directory: '%kernel.project_dir%/public/uploads/images'
+
+# Supprimez la clé loaded_from
